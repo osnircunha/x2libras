@@ -31,7 +31,8 @@
   "keywords": [
     "bluemix",
     "watson",
-    "libras"
+    "libras",
+    "cloudant"
   ],
   "author": "Osnir Cunha",
   "license": "Apache v2.0",
