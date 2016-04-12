@@ -60,7 +60,7 @@ Return a list of all words from database. The word object structure is the same 
 
 ##### GET /api/libras/video/:id
 Return a video file based on the given file name.
-The videos are currently stored at a Cloudant database and are available at http://www.ines.gov.br - Instituto Nacional de Educação de Surdos (INES)
+The videos are currently stored at a Bluemix Cloudant database and are available at http://www.ines.gov.br - Instituto Nacional de Educação de Surdos (INES)
 
 ##### GET /api/translation/translate?text=query
 Return a list of translations comma separated based on given query. The query could be a simple string or a list of string comma separated.
