@@ -31,4 +31,4 @@ public class Constants {
 
 [android_sdk]: http://developer.android.com/sdk/index.html
 [backend_readme]: https://github.com/osnircunha/x2libras/blob/master/nodejs_backend/README.md
-[apk_url]: http://ec2-54-201-148-54.us-west-2.compute.amazonaws.com/jenkins/job/x2libras/lastSuccessfulBuild/artifact/android/app/build/outputs/apk/app-release-unsigned.apk
+[apk_url]: http://ec2-54-201-148-54.us-west-2.compute.amazonaws.com/jenkins/job/x2libras/lastSuccessfulBuild/artifact/android/app/build/outputs/apk/app-debug.apk
