@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new WordListFragment(), WordListFragment.TAG).addToBackStack("home").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new WordListFragment(), WordListFragment.TAG).commit();
     }
 
     @Override
@@ -57,10 +57,10 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new WordListFragment()).commit();
                 break;
             case R.id.nav_history:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HistoryFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HistoryFragment()).addToBackStack(WordListFragment.TAG).commit();
                 break;
             case R.id.nav_search:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ImageRecognizeFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ImageRecognizeFragment()).addToBackStack(WordListFragment.TAG).commit();
                 break;
 
             case R.id.nav_share:

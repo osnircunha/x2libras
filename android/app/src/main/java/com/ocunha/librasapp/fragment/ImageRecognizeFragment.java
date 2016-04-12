@@ -131,7 +131,7 @@ public class ImageRecognizeFragment extends Fragment {
                 wordListFragment.setLibrasWords(JsonUtils.parseJsonListToLibrasWord(new String(responseBody)));
 
                 progressBar.setVisibility(View.INVISIBLE);
-                getFragmentManager().beginTransaction().replace(R.id.content_frame, wordListFragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, wordListFragment).addToBackStack(WordListFragment.TAG).commit();
             }
 
             @Override

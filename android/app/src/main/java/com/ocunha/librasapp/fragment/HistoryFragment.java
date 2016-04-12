@@ -54,7 +54,7 @@ public class HistoryFragment extends Fragment implements SearchView.OnQueryTextL
                 contentFragment.setLibrasWord(librasWords.get(idx));
                 Preferences.getInstance().logSearchHistory(librasWords.get(idx));
 
-                getFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).addToBackStack(WordListFragment.TAG).commit();
             }
         });
 
