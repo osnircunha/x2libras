@@ -16,7 +16,7 @@ This instructions will help you to checkout the x2libras app in your local envir
 
 ## TODOs
 1. Support to search word by voice using [Speech to Text][st_docs]
-
+1. Improve image classifier and categories using [custom classifiers][vr_classifier_docs]
 
 
 ## License
@@ -27,6 +27,7 @@ This instructions will help you to checkout the x2libras app in your local envir
 [node]: http://nodejs.org/download
 [repo]: git@github.com:osnircunha/x2libras.git
 [vr_docs]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/visual-recognition.html
+[vr_classifier_docs]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/visual-recognition/customizing.shtml
 [lt_docs]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/language-translation.html
 [st_docs]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/speech-to-text.html
 [backend_readme]: https://github.com/osnircunha/x2libras/blob/master/nodejs_backend/README.md
