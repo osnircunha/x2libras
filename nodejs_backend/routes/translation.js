@@ -24,16 +24,19 @@ router.get('/identifylanguage', function(req, res, next) {
 });
 
 router.get('/translate', function(req, res, next) {
-
+  console.log('/translate called |', req.query.text, '|');
   languageTranslation.translate({
     text: req.query.text.indexOf('_') > -1 ? req.query.text.replace(/[^a-zA-Z0-9]/g, ' ') : req.query.text,
     source: 'en',
     target: 'pt'
   }, function(err, translation) {
+    console.log('translation called |', translation.translations, '|');
     if (err) {
       next(err);
     } else {
-      res.status(200).send(translation);
+      if (translation.translations) {
+        res.status(200).send(translation.translations[0].translation);
+      }
     }
   });
 

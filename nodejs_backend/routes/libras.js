@@ -3,7 +3,6 @@
  */
 var express = require('express');
 var router = express.Router();
-var request = require('request');
 var fs = require('fs');
 var mime = require('mime');
 var nano = require('nano')({
@@ -12,12 +11,12 @@ var nano = require('nano')({
 var librasDb = nano.use("libras_words");
 var librasVideoDb = nano.use("libras_videos");
 
-var rp = require('request-promise');
 var forEachAsync = require('foreachasync').forEachAsync
 
 /* GET home page. */
 router.get('/word', function(req, res, next) {
   var word = req.query.word;
+  console.log('request word |', word, '|');
   librasDb.search('words', 'wordSearch', {
     q: word
   }, function(err, doc) {
@@ -32,6 +31,7 @@ router.get('/word', function(req, res, next) {
           "word": item.fields.word
         });
       });
+      console.log('list |', list, '|');
       res.status(200).send(list);
     } else {
       console.log(err);

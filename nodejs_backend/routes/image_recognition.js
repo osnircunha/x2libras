@@ -6,6 +6,7 @@ var router = express.Router();
 var watson = require('watson-developer-cloud');
 var fs = require('fs');
 var multer = require('multer');
+var request = require('request');
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -37,12 +38,10 @@ var imageRoute = function(app) {
       if (err) {
         next(err);
       } else {
-        if (req.query.translate === 'true') {
-          translate(results, function(list) {
-            res.redirect('/api/translation/translate?text=' + list);
-          })
+        if (results.images && results.images[0] && results.images[0].scores) {
+          translate(res, results.images[0].scores);
         } else {
-          res.status(200).send(results);
+          res.status(200).send('Empty');
         }
       }
     });
@@ -51,15 +50,14 @@ var imageRoute = function(app) {
   return router;
 }
 
-var translate = function(imageNames, callback) {
-  if (imageNames.images && imageNames.images[0] && imageNames.images[0].scores) {
-    var words = [];
-    imageNames.images[0].scores.forEach(function(word) {
-      words.push(word.name.replace(/[^a-zA-Z0-9]/g, ' '));
-    });
-    callback(words);
-  }
-
+var translate = function(res, imageNames) {
+  var words = [];
+  console.log('iterate to words:', imageNames.length, 'items |', imageNames, '|');
+  imageNames.forEach(function(word) {
+    words.push(word.name.replace(/[^a-zA-Z0-9]/g, ' '));
+  });
+  console.log('words |', words, '|');
+  res.redirect('/api/translation/translate?text=' + words);
 }
 
 

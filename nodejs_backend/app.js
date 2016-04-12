@@ -11,9 +11,12 @@ var app = express();
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+  limit: '50mb'
+}));
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
+  limit: '50mb'
 }));
 
 app.use('/api/translation', translation);
