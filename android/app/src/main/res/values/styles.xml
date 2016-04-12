@@ -1,0 +1,42 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.Word" parent="TextAppearance.AppCompat" />
+
+    <style name="AppTheme.Word.Title" parent="TextAppearance.AppCompat.Title" >
+        <item name="android:layout_marginBottom">@dimen/title_margin_bottom</item>
+    </style>
+
+    <style name="AppTheme.Word.Description" >
+        <item name="android:layout_marginBottom">@dimen/text_area_margin_bottom</item>
+    </style>
+
+    <style name="AppTheme.ImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_width">72dp</item>
+    </style>
+
+    <style name="AppTheme.CloseButton">
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:color">@android:color/darker_gray</item>
+    </style>
+
+</resources>

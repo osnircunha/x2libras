@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_photo_camera_black_24dp"
+            android:title="@string/label_capture" />
+        <item
+            android:id="@+id/nav_dictionary"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="@string/label_dictionary" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_history_black_24dp"
+            android:title="@string/label_history" />
+    </group>
+
+    <item android:title="@string/empty_string">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_share_black_24dp"
+                android:title="@string/label_share" />
+            <item
+                android:id="@+id/nav_info"
+                android:icon="@drawable/ic_info_outline_black_24dp"
+                android:title="@string/label_about" />
+        </menu>
+    </item>
+
+</menu>
