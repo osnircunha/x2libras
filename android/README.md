@@ -29,22 +29,27 @@ public class Constants {
 ...
 ```
 
+
+
 ### Application usage
 
 You can see the menu options by sliding the navigation menu on left:
 
-![Navigation Menu](screenshots/menu.png" width="394px" height="640px">
+<img src="screenshots/menu.png" width="394px" height="640px">
+
 
 ##### Image recognize
 Use this menu option to find a LIBRAS word based on a picture. You can select a picture from gallery or take a new one using device camera.
 
 <img src="screenshots/image_recognition.png" width="394px" height="640px">
 
+
 ##### Word search
 Type a word or a list of word comma separated:
 
 <img src="screenshots/search_result.png" width="394px" height="640px">
 <img src="screenshots/search_result_array.png" width="394px" height="640px">
+
 
 ##### Search history
 List the word view history:
@@ -54,6 +59,7 @@ List the word view history:
 > For any of the functions above you can just touch the word from result list to see the LIBRAS video and some details such as word definition and sample usage.
 
 <img src="screenshots/video_view.png" width="394px" height="640px">
+
 
 
 [android_sdk]: http://developer.android.com/sdk/index.html
