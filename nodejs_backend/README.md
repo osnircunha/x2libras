@@ -20,7 +20,7 @@ Follow the instructions bellow to run backend in your local environment.
     ```
     **Note:** Make sure you are in the `nodejs_backend` directory, the `package.json` file should be visible.
 
-1. In order to run the backend in your local environment you need an [Bluemix][bluemix] account and an application with `Visual Recognition` and `Language Translation` services:
+1. In order to run the backend in your local environment you need a [Bluemix][bluemix] account and an application with `Visual Recognition` and `Language Translation` services:
   * Get credentials to use Visual Recognition [here][vr_docs] and to use Language Translation [here][lt_docs]. After that update .env file with your credentials.
 
     ```

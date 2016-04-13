@@ -14,7 +14,7 @@ Follow the instructions bellow to get Libras Android application running.
     $ git clone https://github.com/osnircunha/x2libras.git
     ```
 
-1. Install [Android Studion][android_sdk]
+1. Install [Android Studio][android_sdk]
 
 1. On Android Studio select `Open an existing Android Studio project` and open `android` folder from git repository.
 
@@ -28,6 +28,32 @@ public class Constants {
     private static final String BASE_URL = "http://localhost:3000/api";
 ...
 ```
+
+### Application usage
+
+You can see the menu options by sliding the navigation menu on left:
+
+![Navigation Menu](screenshots/menu.png)
+
+##### Image recognize
+Use this menu option to find a LIBRAS word based on a picture. You can select a picture from gallery or take a new one using device camera.
+
+![Navigation Menu](screenshots/image_recognition.png)
+
+##### Word search
+Type a word or a list of word comma separated:
+
+![Search one word](screenshots/search_result.png)
+![Search multiples words](screenshots/search_result_array.png)
+
+##### Search history
+List the word view history:
+
+![Search history](screenshots/history.png)
+
+> For any of the functions above you can just touch the word from result list to see the LIBRAS video and some details such as word definition and sample usage.
+
+![Search history](screenshots/video_view.png)
 
 [android_sdk]: http://developer.android.com/sdk/index.html
 [backend_readme]: https://github.com/osnircunha/x2libras/blob/master/nodejs_backend/README.md
