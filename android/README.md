@@ -19,7 +19,7 @@ Follow the instructions bellow to get Libras Android application running.
 1. On Android Studio select `Open an existing Android Studio project` and open `android` folder from git repository.
 
 
-By default it is using the Bluemix instance of x2libras backend. You can set up and run the backend locally by following [Set up back end instructions][backend_readme] and change the host on `Constants.java` class.
+By default it is using a Bluemix instance of x2libras backend - http://libras.mybluemix.net. You can set up and run the backend locally by following [Set up back end instructions][backend_readme] and change the host url on `Constants.java` class.
 
 ```java
 package com.ocunha.librasapp.utils;
