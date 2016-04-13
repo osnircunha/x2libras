@@ -3,14 +3,17 @@ package com.ocunha.librasapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.ocunha.librasapp.R;
 import com.ocunha.librasapp.fragment.HistoryFragment;
@@ -72,12 +75,17 @@ public class MainActivity extends AppCompatActivity
                 startActivity(Intent.createChooser(sendIntent, getString(R.string.label_share)));
                 break;
             case R.id.nav_info:
+                final SpannableString s = new SpannableString(getString(R.string.about_message));
+                Linkify.addLinks(s, Linkify.ALL);
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setIcon(R.drawable.ic_nav_header)
+                AlertDialog dialog = builder.setIcon(R.drawable.ic_nav_header)
                         .setTitle(getString(R.string.app_name))
-                        .setMessage(getString(R.string.about_message))
-                        .create()
-                        .show();
+                        .setMessage(s)
+                        .create();
+                dialog.show();
+
+                ((TextView)dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
                 break;
 
         }

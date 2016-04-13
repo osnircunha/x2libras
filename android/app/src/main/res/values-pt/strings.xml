@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Libras</string>
+
+    <string name="navigation_drawer_open">Abrir painel de navegação</string>
+    <string name="navigation_drawer_close">Fechar painel de navegação</string>
+
+    <string name="message_select_image">Capture uma imagem da câmera ou selecione da galeria.</string>
+
+    <string name="hint_search">Escreva uma palavra para procurar</string>
+
+    <string name="action_settings">Configurações</string>
+    <string name="action_search">Procurar</string>
+
+    <string name="label_word">Palavra</string>
+    <string name="label_description">Descrição</string>
+    <string name="label_libras_sample">Exemplo em Libras</string>
+    <string name="label_sample">Exemplo</string>
+
+
+    <string name="label_about">Sobre</string>
+    <string name="label_share">Compartilhar</string>
+    <string name="empty_string"></string>
+    <string name="label_dictionary">Procurar palavra</string>
+    <string name="label_capture">Reconhecer imagem</string>
+    <string name="label_history">Histórico de busca</string>
+    <string name="label_settings">Ferramentas</string>
+    <string name="label_select_picture">Selecione uma imagem</string>
+    <string name="share_message">Olá, da uma olhada que legal esse aplicativo: https://github.com/osnircunha/x2libras</string>
+    <string name="about_message">Visite https://github.com/osnircunha/x2libras para obter mais informações sobre o aplicativo.</string>
+</resources>
