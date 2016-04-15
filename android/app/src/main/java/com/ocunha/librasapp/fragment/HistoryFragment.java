@@ -2,7 +2,6 @@ package com.ocunha.librasapp.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +26,6 @@ import java.util.ArrayList;
  */
 public class HistoryFragment extends Fragment implements SearchView.OnQueryTextListener{
 
-    public static final String TAG = HistoryFragment.class.getSimpleName();
 
     private ArrayList<LibrasWord> librasWords;
     private LibrasWordAdapter librasWordAdapter;
@@ -54,7 +52,7 @@ public class HistoryFragment extends Fragment implements SearchView.OnQueryTextL
                 contentFragment.setLibrasWord(librasWords.get(idx));
                 Preferences.getInstance().logSearchHistory(librasWords.get(idx));
 
-                getFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).addToBackStack(WordListFragment.TAG).commit();
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment, "content").addToBackStack(null).commit();
             }
         });
 

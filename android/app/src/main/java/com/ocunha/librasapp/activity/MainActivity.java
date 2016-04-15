@@ -3,6 +3,7 @@ package com.ocunha.librasapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -39,7 +40,33 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new WordListFragment(), WordListFragment.TAG).commit();
+
+        Fragment fragment;
+        String tag;
+        if(savedInstanceState != null){
+            tag = savedInstanceState.getString("tag");
+            fragment = getSupportFragmentManager().getFragment(savedInstanceState, tag);
+        } else {
+            fragment = new WordListFragment();
+            tag = "main";
+        }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment, tag).commitAllowingStateLoss();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String tag = "content";
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+
+        if(fragment == null) {
+            tag = "main";
+            fragment = getSupportFragmentManager().findFragmentByTag(tag);
+
+        }
+        outState.putString("tag", tag);
+        getSupportFragmentManager().putFragment(outState, tag, fragment);
     }
 
     @Override
@@ -57,13 +84,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         switch (id){
             case R.id.nav_dictionary:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new WordListFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new WordListFragment(), "main").commit();
                 break;
             case R.id.nav_history:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HistoryFragment()).addToBackStack(WordListFragment.TAG).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HistoryFragment(), "main").commit();
                 break;
             case R.id.nav_search:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ImageRecognizeFragment()).addToBackStack(WordListFragment.TAG).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ImageRecognizeFragment(), "main").commit();
                 break;
 
             case R.id.nav_share:

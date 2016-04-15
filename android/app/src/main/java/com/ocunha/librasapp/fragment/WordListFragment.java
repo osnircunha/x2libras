@@ -34,8 +34,6 @@ import cz.msebera.android.httpclient.Header;
  */
 public class WordListFragment extends Fragment {
 
-    public static final String TAG = WordListFragment.class.getSimpleName();
-
     private ArrayList<LibrasWord> librasWords = new ArrayList<>();
     private LibrasWordAdapter librasWordAdapter;
 
@@ -95,7 +93,7 @@ public class WordListFragment extends Fragment {
 
                 Preferences.getInstance().logSearchHistory(librasWords.get(idx));
 
-                getFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment).addToBackStack(WordListFragment.TAG).commit();
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, contentFragment, "content").addToBackStack(null).commit();
             }
         });
 

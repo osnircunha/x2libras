@@ -1,8 +1,8 @@
 package com.ocunha.librasapp.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +26,7 @@ import com.ocunha.librasapp.utils.JsonUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -34,11 +35,23 @@ import cz.msebera.android.httpclient.Header;
  */
 public class ImageRecognizeFragment extends Fragment {
 
-    public static final String TAG = ImageRecognizeFragment.class.getSimpleName();
-
     private ImageView imageView;
     private ProgressBar progressBar;
+    private Bitmap bitmap;
 
+    private FragmentActivity activity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.activity   = (FragmentActivity)context;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,7 +79,22 @@ public class ImageRecognizeFragment extends Fragment {
             }
         });
 
+        if(savedInstanceState != null){
+            bitmap = savedInstanceState.getParcelable("bitmap");
+            imageView.setImageBitmap(bitmap);
+            if(bitmap != null){
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        }
+
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable("bitmap", bitmap);
     }
 
     @Override
@@ -76,53 +104,57 @@ public class ImageRecognizeFragment extends Fragment {
             switch (requestCode) {
                 case 777:
                     Bundle extras = dt.getExtras();
-                    final Bitmap imageBitmap = (Bitmap) extras.get("data");
-                    imageView.setImageBitmap(imageBitmap);
-                    classifyImage(Constants.IMAGE_RECOGNITION_CLASSIFY_URL, imageBitmap);
+                    bitmap = (Bitmap) extras.get("data");
+                    imageView.setImageBitmap(bitmap);
+                    classifyImage(Constants.IMAGE_RECOGNITION_CLASSIFY_URL, bitmap);
 
                     break;
                 case 778:
                     Uri selectedImage = dt.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String mCurrentPhotoPath = cursor.getString(columnIndex);
-                    cursor.close();
+                    try {
+                        bitmap = decodeUri(selectedImage);
+                        imageView.setImageBitmap(bitmap);
 
-                    // Get the dimensions of the View
-                    int targetW = imageView.getWidth();
-                    int targetH = imageView.getHeight();
-
-                    // Get the dimensions of the bitmap
-                    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                    bmOptions.inJustDecodeBounds = true;
-                    BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-                    int photoW = bmOptions.outWidth;
-                    int photoH = bmOptions.outHeight;
-
-                    // Determine how much to scale down the image
-                    int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-                    // Decode the image file into a Bitmap sized to fill the View
-                    bmOptions.inJustDecodeBounds = false;
-                    bmOptions.inSampleSize = scaleFactor;
-                    bmOptions.inPurgeable = true;
-
-                    Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
-                    imageView.setImageBitmap(bitmap);
-
-                    classifyImage(Constants.IMAGE_RECOGNITION_CLASSIFY_URL, bitmap);
+                        classifyImage(Constants.IMAGE_RECOGNITION_CLASSIFY_URL, bitmap);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
                     break;
             }
         }
     }
 
+    private Bitmap decodeUri(Uri selectedImage) throws FileNotFoundException {
+        // Decode image size
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(selectedImage), null, o);
+
+        // The new size we want to scale to
+        final int REQUIRED_SIZE = 140;
+
+        // Find the correct scale value. It should be the power of 2.
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
+        int scale = 1;
+        while (true) {
+            if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE) {
+                break;
+            }
+            width_tmp /= 2;
+            height_tmp /= 2;
+            scale *= 2;
+        }
+
+        // Decode with inSampleSize
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = scale;
+        return BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(selectedImage), null, o2);
+    }
+
     private void findWords(String words){
         RequestParams requestParams = new RequestParams();
         requestParams.put("word", words);
-
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(Constants.LIBRAS_WORD_URL, requestParams, new AsyncHttpResponseHandler() {
             @Override
@@ -131,7 +163,7 @@ public class ImageRecognizeFragment extends Fragment {
                 wordListFragment.setLibrasWords(JsonUtils.parseJsonListToLibrasWord(new String(responseBody)));
 
                 progressBar.setVisibility(View.INVISIBLE);
-                getFragmentManager().beginTransaction().replace(R.id.content_frame, wordListFragment).addToBackStack(WordListFragment.TAG).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, wordListFragment, "main").commit();
             }
 
             @Override
@@ -150,7 +182,6 @@ public class ImageRecognizeFragment extends Fragment {
 
         RequestParams requestParams = new RequestParams();
         requestParams.put("images_file", new ByteArrayInputStream(data), "image.jpg", "image/jpeg");
-
         AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(60000);
         client.setEnableRedirects(true);
