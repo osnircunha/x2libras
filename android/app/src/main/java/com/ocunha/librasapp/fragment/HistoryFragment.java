@@ -20,6 +20,7 @@ import com.ocunha.librasapp.domain.LibrasWord;
 import com.ocunha.librasapp.utils.Preferences;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by osnircunha on 4/7/16.
@@ -102,7 +103,7 @@ public class HistoryFragment extends Fragment implements SearchView.OnQueryTextL
     private ArrayList<LibrasWord> filter(String query,ArrayList<LibrasWord> words ){
         ArrayList<LibrasWord> librasWords = new ArrayList<>();
         for(LibrasWord word : words){
-            if(word.getWord().toLowerCase().contains(query.toLowerCase())){
+            if(word.getWord().toLowerCase(Locale.getDefault()).contains(query.toLowerCase())){
                 librasWords.add(word);
             }
         }

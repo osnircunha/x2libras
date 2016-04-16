@@ -27,4 +27,7 @@
     <string name="label_select_picture">Selecione uma imagem</string>
     <string name="share_message">Olá, da uma olhada que legal esse aplicativo: https://github.com/osnircunha/x2libras</string>
     <string name="about_message">Visite https://github.com/osnircunha/x2libras para obter mais informações sobre o aplicativo.</string>
+    <string name="label_no_internet">Sem acesso a internet.</string>
+    <string name="label_not_found">Não encontrado</string>
+    <string name="label_error_on_search">Erro ao buscar palavra</string>
 </resources>

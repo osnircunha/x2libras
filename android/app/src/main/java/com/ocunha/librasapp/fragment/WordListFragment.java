@@ -19,6 +19,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ocunha.librasapp.R;
+import com.ocunha.librasapp.activity.MainActivity;
 import com.ocunha.librasapp.adapter.LibrasWordAdapter;
 import com.ocunha.librasapp.domain.LibrasWord;
 import com.ocunha.librasapp.utils.Constants;
@@ -41,7 +42,7 @@ public class WordListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_search_list, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -56,6 +57,10 @@ public class WordListFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+                if(!MainActivity.isConnected(getContext())){
+                    Snackbar.make(view, R.string.label_no_internet, Snackbar.LENGTH_LONG).show();
+                    return;
+                }
                 progressBar.setVisibility(View.VISIBLE);
                 String query = queryTextView.getText().toString();
                 if(!"".equals(query.trim())){
@@ -68,7 +73,8 @@ public class WordListFragment extends Fragment {
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             hideSoftKeyboard();
 
-                            librasWordAdapter.animateTo(JsonUtils.parseJsonListToLibrasWord(new String(responseBody)));
+                            ArrayList<LibrasWord> words = JsonUtils.parseJsonListToLibrasWord(new String(responseBody));
+                            librasWordAdapter.animateTo(words);
 
                             progressBar.setVisibility(View.INVISIBLE);
                         }
@@ -76,8 +82,7 @@ public class WordListFragment extends Fragment {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                             progressBar.setVisibility(View.INVISIBLE);
-                            Snackbar.make(view, "Error on search", Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
+                            Snackbar.make(view, R.string.label_error_on_search, Snackbar.LENGTH_LONG).show();
                         }
                     });
                 }

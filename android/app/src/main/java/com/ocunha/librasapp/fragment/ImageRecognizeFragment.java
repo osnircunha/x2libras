@@ -21,6 +21,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ocunha.librasapp.R;
+import com.ocunha.librasapp.activity.MainActivity;
 import com.ocunha.librasapp.utils.Constants;
 import com.ocunha.librasapp.utils.JsonUtils;
 
@@ -55,7 +56,7 @@ public class ImageRecognizeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_image_recognition_layout, container, false);
+        final View view = inflater.inflate(R.layout.fragment_image_recognition_layout, container, false);
 
         imageView = (ImageView) view.findViewById(R.id.thumb);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
@@ -63,6 +64,10 @@ public class ImageRecognizeFragment extends Fragment {
         view.findViewById(R.id.btn_capture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!MainActivity.isConnected(getContext())){
+                    Snackbar.make(view, R.string.label_no_internet, Snackbar.LENGTH_LONG).show();
+                    return;
+                }
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(takePictureIntent, 777);
@@ -73,6 +78,10 @@ public class ImageRecognizeFragment extends Fragment {
         view.findViewById(R.id.btn_from_gallery).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!MainActivity.isConnected(getContext())){
+                    Snackbar.make(view, R.string.label_no_internet, Snackbar.LENGTH_LONG).show();
+                    return;
+                }
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK);
                 pickPhoto.setType("image/*");
                 startActivityForResult(Intent.createChooser(pickPhoto, getString(R.string.label_select_picture)), 778);
